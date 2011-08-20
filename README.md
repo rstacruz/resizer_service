@@ -7,10 +7,14 @@ Start me like you would any Rack app.
 
 Now request for an image this way:
 
-    http://localhost:3000/image.jpg?resize=200x200&source=http://example.org/image.png
+    http://localhost:3000/image?resize=200x200&source=http://example.org/image.png
 
 Parameters:
 
  * `source=URL` to define where the (required)
  * `resize=WIDTHxHEIGHT` to specify the dimensions you need
  * `format=X` to specify what image format you need it in (*png, jpg, gif*)
+
+### Acknowledgements
+
+Inspired by http://boxresizer.com/, which this is (mostly) compatible with.

@@ -5,7 +5,7 @@ module Resizer
   class App < Sinatra::Base
     set :public, Resizer.root('public')
 
-    get '/image.jpg' do
+    get '/image' do
       pass  unless allowed?
 
       url = params[:source]
