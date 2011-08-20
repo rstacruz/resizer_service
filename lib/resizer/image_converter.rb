@@ -22,7 +22,7 @@ module Resizer
       @source   = source
       @dim      = dim
       @format   = format
-      @base     = "#{dim}/#{slugify(source)}.#{@format}"
+      @base     = "#{dim}/#{slugify(source.to_s)}.#{@format}"
       @url      = "/images/#{@base}"
       @original = root("public", "images/original/#{slugify(source)}")
       @filename = root("public", url)

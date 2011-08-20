@@ -6,28 +6,35 @@ module Resizer
     set :public, Resizer.root('public')
 
     get '/image' do
-      pass  unless allowed?
+      return 403  unless allowed?
 
       url = params[:source]
       dim = params[:resize]  # 50x50
       format = params[:format]
 
-      url = ImageConverter.work(url, dim, format)
-      redirect url
+      return 400 unless url
+
+      begin
+        url = ImageConverter.work(url, dim, format)
+        redirect url
+      rescue Errno::ENOENT => e
+        404
+      end
     end
 
     helpers do
       def allowed?
-        if Resizer.config?
-          config = Resizer.config
+        return true  unless Resizer.config?
 
-          if config.allow_any_referrer
-            true
-          elsif request.referrer.nil?
-              true  if config.allow_no_referrer
-          else
-            config.referrer_whitelist.any? { |domain| request.referrer.include?(domain) }
-          end
+        config = Resizer.config
+
+        if config.allow_any_referrer
+          puts "Any referrer is okay"
+          true
+        elsif request.referrer.nil?
+          true  if config.allow_no_referrer
+        else
+          config.referrer_whitelist.any? { |domain| request.referrer.include?(domain) }
         end
       end
     end
