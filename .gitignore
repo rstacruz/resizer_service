@@ -1,0 +1,3 @@
+/config/resizer.yml
+/public/images
+!/public/images/.gitignore

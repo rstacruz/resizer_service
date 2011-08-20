@@ -1,0 +1,4 @@
+allow_no_referrer: true
+allow_any_referrer: false
+referrer_whitelist:
+ - frugalpanda.ph
