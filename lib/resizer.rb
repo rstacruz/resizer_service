@@ -10,6 +10,7 @@ module Resizer
 
   def self.config
     @config ||= begin
+      require 'yaml'
       file = root('config/resizer.yml')
 
       h = if File.file?(file)
