@@ -12,8 +12,11 @@ Now request for an image this way:
 Parameters:
 
  * `source=URL` to define where the (required)
- * `resize=WIDTHxHEIGHT` to specify the dimensions you need
+ * `resize=WIDTHxHEIGHT` to specify the dimensions you need. You may also use:
+   - `resize=WIDTHx` (eg, *200x*) to resize to a specific width, but dynamic height, or
+   - `resize=xHEIGHT` (eg, *x50*) for a dynamic width
  * `format=X` to specify what image format you need it in (*png, jpg, gif*)
+ * `quality=N` to specify the JPEG quality level (0..100)
 
 ### Acknowledgements
 

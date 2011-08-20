@@ -1,10 +1,11 @@
 module Resizer
   class ImageConverter
-    COMMAND = "convert -size '%s' '%s' -resize '%s' -background black -compose copy -gravity center -extent '%s' -quality 80 '%s'"
+    EXTENT  = "-background black -compose copy -gravity center -extent '%s'"
+    COMMAND = "convert -size '%s' '%s' -resize '%s' %s -quality %s '%s'"
 
     # Works. Returns the URL.
-    def self.work(source, dim, format='jpg')
-      i = new(source, dim, format)
+    def self.work(source, dim, format='jpg', quality=80)
+      i = new(source, dim, format, quality)
       i.convert!
       i.url
     end
@@ -18,10 +19,11 @@ module Resizer
     attr_reader :filename    # Full path to resized image
     attr_reader :source      # http://example.com/image.jpg
 
-    def initialize(source, dim, format='jpg')
+    def initialize(source, dim, format='jpg', quality=80)
       @source   = source
       @dim      = dim
       @format   = format
+      @quality  = 80
       @base     = "#{dim}/#{slugify(source.to_s)}.#{@format}"
       @url      = "/images/#{@base}"
       @original = root("public", "images/original/#{slugify(source)}")
@@ -37,7 +39,7 @@ module Resizer
 
     # Download and write to disk
     def download!
-      return @original  if File.exists?(@filename)
+      return @original  if File.exists?(@original)
 
       # Download
       require 'open-uri'
@@ -52,7 +54,17 @@ module Resizer
     def convert!
       return  if File.exists?(@filename)
 
-      system sprintf(COMMAND, @dim, download!, "#{@dim}^", @dim, @filename)
+      if @dim =~ /^[0-9]+x[0-9]+$/
+        # If given fixed dimensions, crop it
+        extent = sprintf(EXTENT, @dim)
+        dim    = "#{@dim}^"
+      else
+        # Otherwise, there's no need
+        extent = ''
+        dim    = @dim
+      end
+
+      system sprintf(COMMAND, @dim, download!, dim, extent, @quality, @filename)
 
       @filename
     end
