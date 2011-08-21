@@ -1,7 +1,7 @@
 module Resizer
   class ImageConverter
     EXTENT  = "-background black -compose copy -gravity center -extent '%s'"
-    COMMAND = "convert -size '%s' '%s' -resize '%s' %s -quality %s '%s'"
+    COMMAND = "convert -size '%s' '%s' -resize '%s' %s -strip -quality %s '%s'"
 
     # Works. Returns the URL.
     def self.work(options={})
