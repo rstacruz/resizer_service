@@ -1,4 +1,7 @@
+# Set this to 'false' to block requests without referrers.
 allow_no_referrer: true
+
+# Number of days before images expire in the clients's caches.
 cache_days: 30
 
 # To limit the referrers, uncomment this and add domains as needed.
