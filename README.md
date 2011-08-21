@@ -15,26 +15,26 @@ Now request for an image this way:
 
 These parameters have to be passed onto `/image` as GET parameters.
 
-#### source
-(Required) The URL of the image to process.
+* __source__   
+  (Required) The URL of the image to process.
 
-#### resize
-(Required) Resizes the image in `WIDTHxHEIGHT` format. Both width and height are
-optional, but at least one has to be defined. Examples:
+* __resize__  
+  (Required) Resizes the image in `WIDTHxHEIGHT` format. Both width and height are
+  optional, but at least one has to be defined. Examples:
 
- * `500x200`
- * `500x`
- * `x40`
+  * `500x200`
+  * `500x`
+  * `x40`
 
-#### format
-The image format you need it in. Can be any of the following:
+* __format__  
+  The image format you need it in. Can be any of the following:
 
- * `png`
- * `jpg`
- * `gif`
+  * `png`
+  * `jpg`
+  * `gif`
 
-#### quality
-The JPEG quality level (defaults to 80). Has to be a number between `0` and `100`.
+* __quality__  
+  The JPEG quality level (defaults to 80). Has to be a number between `0` and `100`.
 
 ### Examples
 
