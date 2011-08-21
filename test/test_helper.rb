@@ -1,6 +1,4 @@
-require 'rubygems'
-Gem::Specification.load(Dir[File.expand_path('../../*.gemspec', __FILE__)].first).dependencies.each { |gem| Gem.activate gem }
-
+require File.expand_path('../../lib/resizer/gem_setup', __FILE__)
 require File.expand_path('../../lib/resizer', __FILE__)
 require 'para'
 require 'fakeweb'

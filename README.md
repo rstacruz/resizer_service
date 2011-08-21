@@ -1,6 +1,21 @@
 # Image resizer service
 #### A small image resizing proxy app
 
+## Requirements
+
+* __ImageMagick__
+  - OSX/Homebrew: `brew install imagemagick`
+  - Ubuntu: `sudo apt-get install imagemagick`
+
+* __Ruby__ 1.8+
+  - OSX: You already have it
+  - Ubuntu: `sudo apt-get install ruby19`
+
+* Some Ruby gems
+  - (The app will alert you when you have missing Ruby gems.)
+
+## Usage
+
 Start me like you would any Rack app.
 
     $ rackup
