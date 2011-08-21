@@ -1,6 +1,11 @@
 require 'sinatra/base'
 require 'hashie'
 
+unless Resizer.imagemagick?
+  $stderr.write "Error: ImageMagick not found.\nYou need ImageMagick to run this app.\n"
+  exit 256
+end
+
 module Resizer
   class App < Sinatra::Base
     set :public, Resizer.root('public')

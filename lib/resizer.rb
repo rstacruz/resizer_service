@@ -27,5 +27,9 @@ module Resizer
     ! config.empty?
   end
 
+  def self.imagemagick?
+    `convert --version` rescue false
+  end
+
   require "#{PREFIX}/lib/resizer/version"
 end
