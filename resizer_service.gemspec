@@ -16,4 +16,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "para", "~> 0.1.1"
   s.add_development_dependency "fakeweb", "~> 1.3.0"
   s.add_development_dependency "chunky_png", "~> 1.2.0"
+  s.add_development_dependency "rack-test", "~> 0.6.0"
 end

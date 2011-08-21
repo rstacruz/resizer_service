@@ -6,9 +6,15 @@ require 'para'
 require 'fakeweb'
 require 'fileutils'
 require 'chunky_png'
+require 'rack/test'
 
 class UnitTest < Para::Test
   URL = "http://example.org/image.jpg"
+  include Rack::Test::Methods
+
+  def app
+    Resizer::App
+  end
 
   def fx(*a)
     File.join File.expand_path('../', __FILE__), 'fixtures', *a
