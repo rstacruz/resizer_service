@@ -44,13 +44,13 @@ class ResizerTest < UnitTest
   end
 
   test "flip" do
-    resize! :source => URL, :resize => "50x50", :format => "png", :flip => 1
+    resize! :source => URL, :resize => "50x50", :format => "png", :vflip => 1
 
     @image.filename.should.be.the_same_png_as fx('flip50.png')
   end
 
   test "flop" do
-    resize! :source => URL, :resize => "50x50", :format => "png", :flop => 1
+    resize! :source => URL, :resize => "50x50", :format => "png", :hflip => 1
 
     @image.filename.should.be.the_same_png_as fx('flop50.png')
   end

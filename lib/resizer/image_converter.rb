@@ -68,8 +68,8 @@ module Resizer
         dim     = @dim
       end
 
-      extras << '-flip' if options[:flip]
-      extras << '-flop' if options[:flop]
+      extras << '-flip' if options[:vflip]
+      extras << '-flop' if options[:hflip]
       extras << "-rotate #{options[:rotate].to_i}" if options[:rotate]
 
       system sprintf(COMMAND, @dim, download!, dim, extras.join(' '), @quality, @filename)

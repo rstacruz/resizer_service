@@ -41,10 +41,10 @@ These parameters have to be passed onto `/image` as GET parameters.
 * __rotate__  
   (Integer) The number of degrees to rotate the image in.
 
-* __flip__  
+* __vflip__  
   When set to `1`, flips the image vertically.
 
-* __flop__  
+* __hflip__  
   When set to `1`, flips the image horizontally.
 
 ## Examples
