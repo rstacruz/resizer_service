@@ -55,12 +55,3 @@ class ResizerTest < UnitTest
     @image.filename.should.be.the_same_png_as fx('flop50.png')
   end
 end
-
-class REnvy::Should
-  def the_same_png_as(right)
-    one = ChunkyPNG::Image.from_file left
-    two = ChunkyPNG::Image.from_file right
-
-    one.pixels.should == two.pixels
-  end
-end

@@ -2,13 +2,12 @@ require 'rubygems'
 Gem::Specification.load(Dir[File.expand_path('../../*.gemspec', __FILE__)].first).dependencies.each { |gem| Gem.activate gem }
 
 require File.expand_path('../../lib/resizer', __FILE__)
-require 'contest'
-require 'renvy'
+require 'para'
 require 'fakeweb'
 require 'fileutils'
 require 'chunky_png'
 
-class UnitTest < Test::Unit::TestCase
+class UnitTest < Para::Test
   URL = "http://example.org/image.jpg"
 
   def fx(*a)
@@ -26,21 +25,29 @@ class UnitTest < Test::Unit::TestCase
   setup do
     FakeWeb.register_uri :get, URL, :body => File.read(fx('image.jpg'))
   end
-
-  teardown do
-    FileUtils.rm_rf Resizer::ImageConverter.images_root
-  end
 end
 
 # Stub
 module Resizer
   class ImageConverter
     def self.images_root(*a)
-      @temp ||= "resizer-#{Time.now.to_i}"
-      path = "/tmp/#{@temp}"
+      @temp ||= begin
+        $temppath = "/tmp/resizer-#{Time.now.to_i}"
+        at_exit { FileUtils.rm_rf $temppath }
+        $temppath
+     end
 
-      FileUtils.mkdir_p path
-      File.join path, *a
+      FileUtils.mkdir_p @temp
+      File.join @temp, *a
     end
+  end
+end
+
+class Para::Should
+  def the_same_png_as(right)
+    one = ChunkyPNG::Image.from_file left
+    two = ChunkyPNG::Image.from_file right
+
+    one.pixels.join('-').should.blaming("Images #{left} and #{right} are not the same.") == two.pixels.join('-')
   end
 end

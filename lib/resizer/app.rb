@@ -12,7 +12,7 @@ module Resizer
 
     get '/image' do
       return 403  unless allowed?
-      return 400 unless params[:source] && params[:resize]
+      return 400  unless params[:source] && params[:resize]
 
       begin
         url = ImageConverter.work(params)
