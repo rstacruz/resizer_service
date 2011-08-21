@@ -11,7 +11,7 @@ module Resizer
     end
 
     def self.images_root(*a)
-      File.join Main.root("public/images"), *a
+      File.join Resizer.root("public/images"), *a
     end
 
     def self.cleanup!
