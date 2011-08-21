@@ -13,6 +13,7 @@ module Resizer
     get '/image' do
       return 403  unless allowed?
       return 400  unless params[:source] && params[:resize]
+      return 400  unless valid_format?(params[:format])
 
       begin
         url = ImageConverter.work(params)
@@ -23,6 +24,10 @@ module Resizer
     end
 
     helpers do
+      def valid_format?(fmt)
+        fmt.nil? || %w(png gif jpg png8 png24 png32).include?(fmt)
+      end
+
       def allowed?
         return true  unless Resizer.config?
 
