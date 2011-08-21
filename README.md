@@ -26,6 +26,8 @@ These parameters have to be passed onto `/image` as GET parameters.
   * `500x`
   * `x40`
 
+### Optional parameters
+
 * __format__  
   The image format you need it in. Can be any of the following:
 
@@ -35,6 +37,15 @@ These parameters have to be passed onto `/image` as GET parameters.
 
 * __quality__  
   The JPEG quality level (defaults to 80). Has to be a number between `0` and `100`.
+
+* __rotate__  
+  (Integer) The number of degrees to rotate the image in.
+
+* __flip__  
+  When set to `1`, flips the image vertically.
+
+* __flop__  
+  When set to `1`, flips the image horizontally.
 
 ## Examples
 

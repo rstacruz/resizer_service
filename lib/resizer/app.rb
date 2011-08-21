@@ -12,16 +12,10 @@ module Resizer
 
     get '/image' do
       return 403  unless allowed?
-
-      url     = params[:source]
-      dim     = params[:resize]  # 50x50
-      format  = params[:format]
-      quality = params[:quality]
-
-      return 400 unless url && dim
+      return 400 unless params[:source] && params[:resize]
 
       begin
-        url = ImageConverter.work(url, dim, format, quality)
+        url = ImageConverter.work(params)
         redirect url
       rescue Errno::ENOENT => e
         404

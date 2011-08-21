@@ -4,30 +4,36 @@ module Resizer
     COMMAND = "convert -size '%s' '%s' -resize '%s' %s -quality %s '%s'"
 
     # Works. Returns the URL.
-    def self.work(source, dim, format='jpg', quality=80)
-      i = new(source, dim, format, quality)
+    def self.work(options={})
+      i = new(options)
       i.convert!
       i.url
     end
 
+    def self.images_root(*a)
+      File.join Main.root("public/images"), *a
+    end
+
     def self.cleanup!
-      FileUtils.rm_rf Main.root("public/images/original")
+      FileUtils.rm_rf images_root("original")
     end
 
     attr_reader :url
     attr_reader :original    # Full path to original image
     attr_reader :filename    # Full path to resized image
     attr_reader :source      # http://example.com/image.jpg
+    attr_reader :options
 
-    def initialize(source, dim, format='jpg', quality=80)
-      @source   = source
-      @dim      = dim
-      @format   = format
-      @quality  = 80
-      @base     = "#{dim}/#{slugify(source.to_s)}.#{@format}"
+    def initialize(options={})
+      @options  = options
+      @source   = options[:source]
+      @dim      = options[:resize]
+      @format   = options[:format] || 'jpg'
+      @quality  = options[:quality] || 80
+      @base     = "#{@dim}/#{slugify(@source.to_s)}.#{@format}"
       @url      = "/images/#{@base}"
-      @original = root("public", "images/original/#{slugify(source)}")
-      @filename = root("public", url)
+      @original = self.class.images_root("original/#{slugify(source)}")
+      @filename = self.class.images_root(@base)
 
       mkdir
     end
@@ -53,23 +59,29 @@ module Resizer
 
     def convert!
       return  if File.exists?(@filename)
+      extras = Array.new
 
-      if @dim =~ /^[0-9]+x[0-9]+$/
-        # If given fixed dimensions, crop it
-        extent = sprintf(EXTENT, @dim)
-        dim    = "#{@dim}^"
+      if fixed_dimensions?
+        extras << sprintf(EXTENT, @dim)  # Crop it
+        dim     = "#{@dim}^"
       else
-        # Otherwise, there's no need
-        extent = ''
-        dim    = @dim
+        dim     = @dim
       end
 
-      system sprintf(COMMAND, @dim, download!, dim, extent, @quality, @filename)
+      extras << '-flip' if options[:flip]
+      extras << '-flop' if options[:flop]
+      extras << "-rotate #{options[:rotate].to_i}" if options[:rotate]
+
+      system sprintf(COMMAND, @dim, download!, dim, extras.join(' '), @quality, @filename)
 
       @filename
     end
 
   private
+    def fixed_dimensions?
+      @dim =~ /^[0-9]+x[0-9]+$/
+    end
+
     def slugify(str)
       str.scan(/[A-Za-z0-9\-_\.]+/).join('-')
     end
