@@ -11,7 +11,7 @@ Now request for an image this way:
 
 ..and the resizer service will grab your image and resize it for you.
 
-### Available parameters
+## Available parameters
 
 These parameters have to be passed onto `/image` as GET parameters.
 
@@ -36,13 +36,13 @@ These parameters have to be passed onto `/image` as GET parameters.
 * __quality__  
   The JPEG quality level (defaults to 80). Has to be a number between `0` and `100`.
 
-### Examples
+## Examples
 
 This resizes to *200px* width as a *JPEG* with *30%* quality.
 
     http://localhost:3000/image?resize=200x&source=http://example.org/image.png&format=jpg&quality=30
 
-### Sinatra/Rails usage
+## Sinatra/Rails usage
 
 Here! Use this helper:
 
@@ -64,6 +64,6 @@ helpers {
 }
 ```
 
-### Acknowledgements
+## Acknowledgements
 
 Inspired by http://boxresizer.com/, which this is (mostly) compatible with.
