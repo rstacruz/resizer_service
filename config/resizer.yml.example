@@ -1,4 +1,6 @@
 allow_no_referrer: true
-allow_any_referrer: false
-referrer_whitelist:
- - frugalpanda.ph
+cache_days: 30
+
+# To limit the referrers, uncomment this and add domains as needed.
+# referrer_whitelist:
+#  - frugalpanda.ph

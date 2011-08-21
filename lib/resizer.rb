@@ -1,3 +1,5 @@
+require 'hashie'
+
 module Resizer
   PREFIX = File.expand_path('../../', __FILE__)
 
@@ -13,13 +15,9 @@ module Resizer
       require 'yaml'
       file = root('config/resizer.yml')
 
-      h = if File.file?(file)
-        YAML::load_file(file)
-      else
-        Hash.new
-      end
-
-      Hashie::Mash.new h
+      config = Hashie::Mash.new YAML::load_file(root('config/resizer.yml.example'))
+      config.merge! YAML::load_file(file)  if File.file?(file)
+      config
     end
   end
 

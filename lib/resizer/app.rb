@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'rack/cache'
 require 'hashie'
 
 unless Resizer.imagemagick?
@@ -10,6 +11,8 @@ module Resizer
   class App < Sinatra::Base
     set :public, Resizer.root('public')
 
+    use Rack::Cache
+
     get '/image' do
       return 403  unless allowed?
       return 400  unless params[:source] && params[:resize]
@@ -17,6 +20,8 @@ module Resizer
 
       begin
         url = ImageConverter.work(params)
+
+        cache_control :public, :max_age => (Resizer.config.cache_days * 86400).to_i
         redirect url
       rescue Errno::ENOENT => e
         404
@@ -33,11 +38,10 @@ module Resizer
 
         config = Resizer.config
 
-        if config.allow_any_referrer
-          true
-        elsif request.referrer.nil?
+        if request.referrer.nil?
           true  if config.allow_no_referrer
         else
+          return true  unless config.referrer_whitelist?
           config.referrer_whitelist.any? { |domain| request.referrer.include?(domain) }
         end
       end

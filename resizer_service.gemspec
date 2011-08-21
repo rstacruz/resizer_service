@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "sinatra", "~> 1.2.6"
   s.add_dependency "hashie", "~> 1.0.0"
+  s.add_dependency "rack-cache", "~> 1.0.2"
 
   s.add_development_dependency "para", "~> 0.1.1"
   s.add_development_dependency "fakeweb", "~> 1.3.0"

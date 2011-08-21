@@ -7,11 +7,11 @@
   - OSX/Homebrew: `brew install imagemagick`
   - Ubuntu: `sudo apt-get install imagemagick`
 
-* __Ruby__ 1.8+
+* __Ruby 1.8+__
   - OSX: You already have it
   - Ubuntu: `sudo apt-get install ruby19`
 
-* Some Ruby gems
+* __Some Ruby gems__
   - (The app will alert you when you have missing Ruby gems.)
 
 ## Usage
