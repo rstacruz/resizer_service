@@ -30,7 +30,6 @@ module Resizer
         config = Resizer.config
 
         if config.allow_any_referrer
-          puts "Any referrer is okay"
           true
         elsif request.referrer.nil?
           true  if config.allow_no_referrer
