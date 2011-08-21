@@ -9,14 +9,60 @@ Now request for an image this way:
 
     http://localhost:3000/image?resize=200x200&source=http://example.org/image.png
 
-Parameters:
+..and the resizer service will grab your image and resize it for you.
 
- * `source=URL` to define where the (required)
- * `resize=WIDTHxHEIGHT` to specify the dimensions you need. You may also use:
-   - `resize=WIDTHx` (eg, *200x*) to resize to a specific width, but dynamic height, or
-   - `resize=xHEIGHT` (eg, *x50*) for a dynamic width
- * `format=X` to specify what image format you need it in (*png, jpg, gif*)
- * `quality=N` to specify the JPEG quality level (0..100)
+### Available parameters
+
+These parameters have to be passed onto `/image` as GET parameters.
+
+#### source
+(Required) The URL of the image to process.
+
+#### resize
+(Required) Resizes the image in `WIDTHxHEIGHT` format. Both width and height are
+optional, but at least one has to be defined. Examples:
+
+ * `500x200`
+ * `500x`
+ * `x40`
+
+#### format
+The image format you need it in. Can be any of the following:
+
+ * `png`
+ * `jpg`
+ * `gif`
+
+#### quality
+The JPEG quality level (defaults to 80). Has to be a number between `0` and `100`.
+
+### Examples
+
+This resizes to *200px* width as a *JPEG* with *30%* quality.
+
+    http://localhost:3000/image?resize=200x&source=http://example.org/image.png&format=jpg&quality=30
+
+### Sinatra/Rails usage
+
+Here! Use this helper:
+
+``` ruby
+# Place this somewhere in your initializers
+ENV['RESIZER_URL'] ||= "http://image.resizer.org/image"
+
+# These are the helpers
+# (Adapt to your favorite web framework as needed)
+helpers {
+  def get_params(hash)
+    hash.map { |k, v| "#{Rack::Utils.escape k}=#{Rack::Utils.escape v}" }.join("&")
+  end
+
+  def img_url(url, options={})
+    options[:source] = url
+    "#{ENV['RESIZER_URL']}?#{get_params(options)}"
+  end
+}
+```
 
 ### Acknowledgements
 
